@@ -18,8 +18,8 @@
 					<Add option="-DBUILD_DLL" />
 				</Compiler>
 				<Linker>
-					<Add option="-lAtGfx-d" />
-					<Add option="-lAtPhys-d" />
+					<Add option="-lAtTools-d" />
+					<Add option="-lAtObjects-d" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -35,8 +35,8 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lAtGfx" />
-					<Add option="-lAtPhys" />
+					<Add option="-lAtTools" />
+					<Add option="-lAtObjects-d" />
 				</Linker>
 			</Target>
 		</Build>
@@ -46,13 +46,11 @@
 			<Add directory="../" />
 		</Compiler>
 		<Linker>
-			<Add option="-lAtTools" />
 			<Add option="-llua52" />
 			<Add option="-lSDL2" />
 			<Add directory="../external/lib" />
 			<Add directory="../AtTools/bin" />
-			<Add directory="../AtGfx/bin" />
-			<Add directory="../AtPhys/bin" />
+			<Add directory="../AtObjects/bin" />
 		</Linker>
 		<Unit filename="API.cpp" />
 		<Unit filename="API.h" />
