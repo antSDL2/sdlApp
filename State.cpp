@@ -1,10 +1,13 @@
 //State.cpp
 #include "State.h"
-#include <AtTools/AtTools.h>
-#include <AtObjects/Renderer.h>
 #include <iostream>
 #include <sstream>
 #include <ctime>
+
+#include <AtUtility/Renderer.h>
+#include <AtUtility/Lua.h>
+
+using namespace AtUtility;
 
 static const int SDL_CUSTOM_CTRL       = 1001;
 static const int SDL_CUSTOM_SHIFT      = 1002;
@@ -75,8 +78,8 @@ namespace AtApp {
                     SDL_SetWindowDisplayMode(Window, NULL);
                     if (Bordered) SDL_SetWindowBordered(Window, SDL_TRUE); else SDL_SetWindowBordered(Window, SDL_FALSE);
 
-                    AtObjects::Renderer::Setup2D(WindowedResolution.X(), WindowedResolution.Y());
-                    AtObjects::Renderer::SetViewport(WindowedResolution.X(), WindowedResolution.Y());
+                    Renderer::Setup2D(WindowedResolution.X(), WindowedResolution.Y());
+                    Renderer::SetViewport(WindowedResolution.X(), WindowedResolution.Y());
                 } else if (WindowMode == WindowModes::Fullscreen) {
                     SDL_RestoreWindow(Window);
                     SDL_SetWindowDisplayMode(Window, NULL);
@@ -85,7 +88,7 @@ namespace AtApp {
                     SDL_SetWindowSize(Window, FullscreenResolution.X(), FullscreenResolution.Y());
                     //SDL_SetWindowPosition(Window, SDL_WINDOWPOS_CENTERED_DISPLAY(DisplayIndex), SDL_WINDOWPOS_CENTERED_DISPLAY(DisplayIndex));
 
-                    AtObjects::Renderer::Setup2D(FullscreenResolution.X(), FullscreenResolution.Y());
+                    Renderer::Setup2D(FullscreenResolution.X(), FullscreenResolution.Y());
                 } else if (WindowMode == WindowModes::Borderless) {
                     SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
                     SDL_SetWindowBordered(Window, SDL_FALSE);
@@ -97,15 +100,15 @@ namespace AtApp {
                     //SDL_SetWindowPosition(Window, SDL_WINDOWPOS_CENTERED_DISPLAY(DisplayIndex), SDL_WINDOWPOS_CENTERED_DISPLAY(DisplayIndex));
                     SDL_SetWindowDisplayMode(Window, NULL);
 
-                    AtObjects::Renderer::Setup2D(Desktop.w, Desktop.h);
-                    AtObjects::Renderer::SetViewport(Desktop.w, Desktop.h);
+                    Renderer::Setup2D(Desktop.w, Desktop.h);
+                    Renderer::SetViewport(Desktop.w, Desktop.h);
                 } else if (WindowMode == WindowModes::Maximised) {
                     SDL_MaximizeWindow(Window);
 
                     int Width = GetWidth(), Height = GetHeight();
 
-                    AtObjects::Renderer::Setup2D(Width, Height);
-                    AtObjects::Renderer::SetViewport(Width, Height);
+                    Renderer::Setup2D(Width, Height);
+                    Renderer::SetViewport(Width, Height);
                     EventQueue.push_back(Events::ResolutionChanged);
                 }
             }
@@ -140,7 +143,7 @@ namespace AtApp {
                 int Event = EventQueue[i];
 
                 if (Event == Events::ResolutionChanged) {
-                    AtTools::Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"ResolutionChanged\");");
+                    Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"ResolutionChanged\");");
                 }
             }
             EventQueue.clear();
@@ -298,7 +301,7 @@ namespace AtApp {
                         std::string EventString;
                         if (Event.type == SDL_KEYDOWN) EventString = "KeyDown"; else if (Event.type == SDL_KEYUP) EventString = "KeyUp";
 
-                        AtTools::Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"" + EventString + "\", " + Stream.str() + ");");
+                        Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"" + EventString + "\", " + Stream.str() + ");");
                     }
                 }
             } else if (Event.type == SDL_MOUSEBUTTONDOWN || Event.type == SDL_MOUSEBUTTONUP) {
@@ -327,7 +330,7 @@ namespace AtApp {
                     std::string EventString;
                     if (Event.type == SDL_MOUSEBUTTONDOWN) EventString = "KeyDown"; else if (Event.type == SDL_MOUSEBUTTONUP) EventString = "KeyUp";
 
-                    AtTools::Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"" + EventString + "\", " + Stream.str() + ");");
+                    Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"" + EventString + "\", " + Stream.str() + ");");
                 }
             } else if (Event.type == SDL_MOUSEWHEEL) {
                 std::ostringstream Stream;
@@ -337,8 +340,8 @@ namespace AtApp {
                     Stream << SDL_CUSTOM_WHEELDOWN;
                 }
 
-                AtTools::Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"KeyDown\", " + Stream.str() + ");");
-                AtTools::Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"KeyUp\", " + Stream.str() + ");");
+                Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"KeyDown\", " + Stream.str() + ");");
+                Lua::ExecuteScript(Lua, "Application.OnGlobalEvent(\"KeyUp\", " + Stream.str() + ");");
             } else if (Event.type == SDL_JOYDEVICEADDED) {
                 SDL_JoystickOpen(Event.jdevice.which);
                 //std::cout << "Opened Joystick " << SDL_JoystickInstanceID(Joystick) << " (" << SDL_JoystickNameForIndex(SDL_JoystickInstanceID(Joystick)) << ")" << std::endl;
@@ -360,8 +363,8 @@ namespace AtApp {
                         //Why is this necessary in only 1 scenario, and can it be added to ApplyVideoMode()?
                         int Width = GetWidth(), Height = GetHeight();
 
-                        AtObjects::Renderer::SetViewport(Width, Height);
-                        AtObjects::Renderer::Setup2D(Width, Height);
+                        Renderer::SetViewport(Width, Height);
+                        Renderer::Setup2D(Width, Height);
 
                         EventQueue.push_back(Events::ResolutionChanged);
                     } else if (WindowMode != WindowModes::Maximised && (Flags&SDL_WINDOW_MAXIMIZED)) {
@@ -372,8 +375,8 @@ namespace AtApp {
                         SDL_GetWindowSize(Window, &Width, &Height);
 
                         SetResolution(Width, Height);
-                        AtObjects::Renderer::SetViewport(Width, Height);
-                        AtObjects::Renderer::Setup2D(Width, Height);
+                        Renderer::SetViewport(Width, Height);
+                        Renderer::Setup2D(Width, Height);
                     }
 
                     Input = 1004;
@@ -408,7 +411,7 @@ namespace AtApp {
         if (Minute < 10) Stream << "0"; Stream << Minute;
         if (Second < 10) Stream << "0"; Stream << Second << ".bmp";
 
-        if (AtObjects::Renderer::SaveScreenshot(Stream.str())) {
+        if (Renderer::SaveScreenshot(Stream.str())) {
             std::cout << "Saved Screenshot: " << Stream.str() << std::endl;
         }
     }
@@ -1093,7 +1096,7 @@ namespace AtApp {
     void State::SetIcon(std::string Icon) {
         this->Icon = Icon;
         if (Window && Icon != "") {
-            SDL_Surface *Surface = AtObjects::Renderer::LoadImage(Icon);
+            SDL_Surface *Surface = Renderer::LoadImage(Icon);
             if (Surface)
                 SDL_SetWindowIcon(Window, Surface);
             else std::cerr << "(Application/State.cpp) SetIcon(): Failed to load application icon." << std::endl;
@@ -1118,11 +1121,11 @@ namespace AtApp {
 
         if (WindowMode == WindowModes::Windowed) {
             if (this->WindowMode == WindowMode && (Width != WindowedResolution.X() || Height != WindowedResolution.Y())) EventQueue.push_back(Events::ResolutionChanged);
-            WindowedResolution = AtObjects::Vector2(Width, Height);
+            WindowedResolution = Vector2(Width, Height);
         } else if (WindowMode == WindowModes::Fullscreen) {
             if (this->WindowMode == WindowMode && (Width != FullscreenResolution.X() || Height != FullscreenResolution.Y())) EventQueue.push_back(Events::ResolutionChanged);
-            PreviousFullscreenResolution = AtObjects::Vector2(FullscreenResolution.X(), FullscreenResolution.Y());
-            FullscreenResolution = AtObjects::Vector2(Width, Height);
+            PreviousFullscreenResolution = Vector2(FullscreenResolution.X(), FullscreenResolution.Y());
+            FullscreenResolution = Vector2(Width, Height);
         } //else std::cerr << "(Application/State.cpp) SetResolution(): Function has no effect in current WindowMode." << std::endl;
     }
 
@@ -1165,7 +1168,7 @@ namespace AtApp {
         this->Lua = Lua;
         this->Title = Title;
         this->Icon = Icon;
-        WindowedResolution = AtObjects::Vector2(Width, Height);
+        WindowedResolution = Vector2(Width, Height);
         this->Resizable = false;
         this->Bordered = true;
     }
@@ -1199,9 +1202,9 @@ namespace AtApp {
                     GLContext = SDL_GL_CreateContext(Window);
                     if (GLContext) {
                         if (D == 2) {
-                            AtObjects::Renderer::Setup2D(GetWidth(), GetHeight());
+                            Renderer::Setup2D(GetWidth(), GetHeight());
                         } else if (D == 3) {
-                            AtObjects::Renderer::Setup3D(GetWidth(), GetHeight());
+                            Renderer::Setup3D(GetWidth(), GetHeight());
                         } else std::cerr << "(Application/State.cpp) Start(): Invalid renderer setup (" << D << "D)." << std::endl;
                     } else std::cerr << "(Application/State.cpp) Start(): Unable to create GLContext. " << SDL_GetError() << "." << std::endl;
 
@@ -1221,7 +1224,7 @@ namespace AtApp {
     void State::Update() {
         if (Window) {
             SDL_GL_SwapWindow(Window);
-            AtObjects::Renderer::Clear();
+            Renderer::Clear();
 
             ++FrameCount;
             if (GetRuntime()-LastUpdate >= 1) {

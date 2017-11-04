@@ -4,7 +4,12 @@
 
 #include <iostream>
 #include "State.h"
-#include <AtTools/AtTools.h>
+
+#include <AtUtility/Lua.h>
+#include <AtUtility/Strings.h>
+
+using namespace AtUtility;
+
 namespace AtApp {
     class API {
         //Members
@@ -606,9 +611,9 @@ namespace AtApp {
                     lua_newtable(Lua);
                     lua_setfield(Lua, -2, "ResolutionChanged");
 
-                    AtTools::Lua::ExecuteScript(Lua, "function Application.OnGlobalEvent(Event, ...) for CallerName,CallbackValues in pairs(GlobalEvents[Event]) do local Caller = CallbackValues[0]; Caller.Callback = CallbackValues[1]; Caller.Callback(...); end end");
-                    AtTools::Lua::ExecuteScript(Lua, "function Application.RegisterEventHandler(Event, Caller, Value) if (Caller and Value and Event) then GlobalEvents[Event][Caller.ID] = {[0] = Caller, [1] = Value}; end end");
-                    AtTools::Lua::ExecuteScript(Lua, "function Application.RemoveEventHandlers(CallerID) for Event in pairs(GlobalEvents) do if (GlobalEvents[Event]) then GlobalEvents[Event][CallerID] = nil; end end end");
+                    Lua::ExecuteScript(Lua, "function Application.OnGlobalEvent(Event, ...) for CallerName,CallbackValues in pairs(GlobalEvents[Event]) do local Caller = CallbackValues[0]; Caller.Callback = CallbackValues[1]; Caller.Callback(...); end end");
+                    Lua::ExecuteScript(Lua, "function Application.RegisterEventHandler(Event, Caller, Value) if (Caller and Value and Event) then GlobalEvents[Event][Caller.ID] = {[0] = Caller, [1] = Value}; end end");
+                    Lua::ExecuteScript(Lua, "function Application.RemoveEventHandlers(CallerID) for Event in pairs(GlobalEvents) do if (GlobalEvents[Event]) then GlobalEvents[Event][CallerID] = nil; end end end");
 
                     lua_setglobal(Lua, "GlobalEvents");
                 }
@@ -885,8 +890,8 @@ namespace AtApp {
 
                     if (Arguments <= 2) {
                         std::string Resolution = lua_tostring(Lua, 1);
-                        int Width = AtTools::Strings::StringTo<int>(Resolution, 'x');
-                        int Height = AtTools::Strings::StringTo<int>(Resolution, 'x', 1);
+                        int Width = Strings::StringTo<int>(Resolution, 'x');
+                        int Height = Strings::StringTo<int>(Resolution, 'x', 1);
                         int WindowMode = -1;
 
                         if (Arguments == 2) WindowMode = lua_tointeger(Lua, 2);

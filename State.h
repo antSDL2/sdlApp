@@ -2,12 +2,14 @@
 #ifndef NEOAPP_STATE_H
 #define NEOAPP_STATE_H
 
-#include <AtObjects/Vector2.h>
+#include <AtUtility/Vector2.h>
 #include <Lua/lua.hpp>
 #include <SDL2/SDL.h>
 #include <string>
 #include <vector>
 #include <map>
+
+using namespace AtUtility;
 
 namespace AtApp {
     namespace WindowModes {
@@ -28,7 +30,7 @@ namespace AtApp {
             float LastUpdate, NextInput, NextProcess;
             int CurrentIPS, CurrentPPS, DisplayIndex, FrameCount, Framerate, InputCount, IPS, MaximumRenderSkips, PPS, ProcessCount, RenderSkips, WindowMode;
             lua_State *Lua;
-            AtObjects::Vector2 FullscreenResolution, PreviousFullscreenResolution, WindowedResolution;
+            Vector2 FullscreenResolution, PreviousFullscreenResolution, WindowedResolution;
             SDL_GLContext GLContext;
             SDL_Window *Window;
             std::string Icon, Title;
