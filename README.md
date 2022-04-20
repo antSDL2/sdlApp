@@ -1,6 +1,6 @@
 # AtApp
 
-C++ Library used to setup, create, and control an application window. Many features are implemented using functionality of the SDL2 external library. The created instance supports OpenGL for rendering.
+Library used to setup, create, and control an application window. Many features are implemented using functionality of the SDL2 external library. The created window instance supports OpenGL for rendering.
 
 ## Classes
 - **State:** Manager class used to create and manipulate the application window.
