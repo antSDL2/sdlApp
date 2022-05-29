@@ -1,6 +1,7 @@
 # AtApp
+SDL2 window manager with a Lua API written in C++.
 
-Library used to setup, create, and control an application window. Base features are implemented using functionality of the SDL2 library. The application window creates an OpenGL context for rendering.
+This library may be used to setup, create, and control an SDL2 application window.
 
 ## Compiling
 To compile the source code, it is recommended to use the Code::Blocks project included in this repository. This library has only been tested in Windows environments. 
