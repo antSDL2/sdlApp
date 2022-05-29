@@ -1,12 +1,14 @@
 # AtApp
 
-Library used to setup, create, and control an application window. Many features are implemented using functionality of the SDL2 external library. The created window instance supports OpenGL for rendering.
+Library used to setup, create, and control an application window. Base features are implemented using functionality of the SDL2 library. The application window creates an OpenGL context for rendering.
 
-## Classes
-- **State:** Manager class used to create and manipulate the application window.
-- **API:** API exposing many of the methods defined in the library to a Lua environment. Allows run-time interaction and manipulation of the application using scripts written in Lua.
+## Compiling
+To compile the source code, it is recommended to use the Code::Blocks project included in this repository. This library has only been tested in Windows environments. 
 
 ## Dependencies
 - [AtUtility](https://github.com/atrapalis/AtUtility "AtUtility GitHub repository")
 - Lua 5.2 binding library (lua52)
 - SDL2 base (SDL2)
+
+## Documentation
+Documentation can be found in the [GitHub pages](https://atrapalis.github.io/AtApp/) for this project.

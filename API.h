@@ -11,16 +11,20 @@
 using namespace AtUtility;
 
 namespace AtApp {
+	/// Used to define, implement, and load a Lua API for the AtApp::State class.
+	/** In addition to API handles for the AtApp::State class, this class implements various globals, such as the entire SDL_Scancode enum, global events, and related functions.
+        The object 'Application' is used to call methods of AtApp::State in Lua scripts, e.g. Application:GetFramerate(); */
     class API {
         //Members
         protected:
-            static State *Application;
+            static State *Application;                          //!< Pointer to the AtApp::State instance used in the API.
         //Access Methods
         protected:
        API();
             ~API();
         //Process Methods
         public:
+            /// Used to load the Lua API to the specified Lua context.
             static void Load(lua_State *Lua, State *State) {
                 Application = State;
 
@@ -622,6 +626,9 @@ namespace AtApp {
         //API Methods
         protected:
             //Access Functions
+
+            /// Returns the number of permitted display modes.
+            /** The returned number of display modes is referring to the current display, set by DisplayIndex. */
             static int GetAvailableVideoModes(lua_State *Lua) {
                 int Results = 1;
 
@@ -636,6 +643,8 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the framerate of the application.
+            /** The framerate is measured and updated once every second. */
             static int GetFramerate(lua_State *Lua) {
                 int Results = 1;
                 int Framerate = 0;
@@ -649,6 +658,8 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the height of the application window.
+            /** @param WindowMode If specified, the function will return the height for that window mode. If not specified, the height for the current window mode will be returned. */
             static int GetHeight(lua_State *Lua) {
                 int Results = 1;
                 int Height = 0;
@@ -667,6 +678,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the maximum allowed rate of input events.
             static int GetIPS(lua_State *Lua) {
                 int Results = 1;
                 int IPS = 0;
@@ -680,6 +692,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the process speed of the main game loop.
             static int GetPPS(lua_State *Lua) {
                 int Results = 1;
                 int PPS = 0;
@@ -693,6 +706,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the current runtime of the application in seconds.
             static int GetRuntime(lua_State *Lua) {
                 int Results = 1;
                 float Runtime = 0;
@@ -706,6 +720,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the VSync property.
             static int GetVSync(lua_State *Lua) {
                 int Results = 1;
                 bool VSync = 0;
@@ -719,6 +734,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the WindowMode property.
             static int GetVideoMode(lua_State *Lua) {
                 int Results = 1;
 
@@ -739,6 +755,8 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the width of the application window.
+            /** @param WindowMode If specified, the function will return the width for that window mode. If not specified, the width for the current window mode will be returned. */
             static int GetWidth(lua_State *Lua) {
                 int Results = 1;
                 int Width = 0;
@@ -757,6 +775,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Returns the WindowMode property.
             static int GetWindowMode(lua_State *Lua) {
                 int Results = 1;
                 int WindowMode = -1;
@@ -770,6 +789,9 @@ namespace AtApp {
                 return Results;
             }
 
+
+            /// Used to check if a specified key is pressed.
+            /** @param Key Uses the SDL_Scancode enumeration. Supports some custom definitions such as SDL_CUSTOM_SHIFT. */
             static int IsKeyPressed(lua_State *Lua) {
                 int Results = 1;
                 bool IsKeyPressed = false;
@@ -787,6 +809,10 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Converts a specified SDL_Scancode to text.
+            /** Used to display different keys in UI menus.
+                @param Key The SDL_Scancode to convert to text.
+                @param Short When true, certain keys are made shorter, e.g. "Bkspc" is short for "Backspace". */
             static int SDLScancodeToText(lua_State *Lua) {
                 int Results = 1;
                 std::string Text;
@@ -809,6 +835,8 @@ namespace AtApp {
             }
 
             //Process Functions
+
+            /// Enables or disables resizing of the application window.
             static int AllowResize(lua_State *Lua) {
                 int Results = 0;
 
@@ -825,6 +853,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Applies current video mode settings.
             static int ApplyVideoMode(lua_State *Lua) {
                 int Results = 0;
 
@@ -835,6 +864,8 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Saves a screenshot at the specified location.
+            /** The filename of the saved screenshot is in the following format: YYYYMMDDHHmmss */
             static int SaveScreenshot(lua_State *Lua) {
                 int Results = 0;
 
@@ -850,6 +881,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Sets the maximum allowed inputs per second.
             static int SetIPS(lua_State *Lua) {
                 int Results = 0;
 
@@ -866,6 +898,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Sets the intended process speed for the application.
             static int SetPPS(lua_State *Lua) {
                 int Results = 0;
 
@@ -882,6 +915,10 @@ namespace AtApp {
                 return Results;
             }
 
+
+            /// Sets the width and height of the application.
+            /** @param Width, Height The specified resolution.
+                @param WindowMode The window mode for which the resolution is intended. If not specified, the current window mode is used. */
             static int SetResolution(lua_State *Lua) {
                 int Results = 0;
 
@@ -903,6 +940,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Sets the title of the window application.
             static int SetTitle(lua_State *Lua) {
                 int Results = 0;
 
@@ -918,6 +956,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Sets the VSync option.
             static int SetVSync(lua_State *Lua) {
                 int Results = 0;
 
@@ -933,6 +972,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Sets the window mode of the application.
             static int SetWindowMode(lua_State *Lua) {
                 int Results = 0;
 
@@ -949,6 +989,7 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Enables or disables the border of the application window.
             static int ShowBorder(lua_State *Lua) {
                 int Results = 0;
 
@@ -965,6 +1006,8 @@ namespace AtApp {
                 return Results;
             }
 
+            /// Stops the application from running.
+            /** This function does not close the application window. */
             static int Stop(lua_State *Lua) {
                 int Results = 0;
 
