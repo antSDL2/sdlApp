@@ -12,4 +12,4 @@ To compile the source code, it is recommended to use the Code::Blocks project in
 - SDL2 base (SDL2)
 
 ## Documentation
-Documentation can be found in the [GitHub pages](https://atrapalis.github.io/AtApp/) for this project.
+Documentation can be found in the [GitHub pages](https://ant-sdl2.github.io/AtApp/) for this project.
