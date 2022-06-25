@@ -7,7 +7,7 @@ This library may be used to setup, create, and control an SDL2 application windo
 To compile the source code, it is recommended to use the Code::Blocks project included in this repository. This library has only been tested in Windows environments. 
 
 ## Dependencies
-- [AtUtility](https://github.com/atrapalis/AtUtility "AtUtility GitHub repository")
+- [sdlUtility](https://github.com/antSDL2/sdlUtility)
 - Lua 5.2 binding library (lua52)
 - SDL2 base (SDL2)
 
