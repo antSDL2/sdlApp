@@ -1,4 +1,4 @@
-# AtApp
+# sdlApp
 SDL2 window manager with a Lua API written in C++.
 
 This library may be used to setup, create, and control an SDL2 application window.
@@ -12,4 +12,4 @@ To compile the source code, it is recommended to use the Code::Blocks project in
 - SDL2 base (SDL2)
 
 ## Documentation
-Documentation can be found in the [GitHub pages](https://ant-sdl2.github.io/AtApp/) for this project.
+Documentation can be found in the [GitHub pages](https://antSDL2.github.io/sdlApp/) for this project.
