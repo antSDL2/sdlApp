@@ -5,19 +5,19 @@
 #include <iostream>
 #include "State.h"
 
-#include <AtUtility/Lua.h>
-#include <AtUtility/Strings.h>
+#include <sdlUtility/Lua.h>
+#include <sdlUtility/Strings.h>
 
-using namespace AtUtility;
+using namespace sdlUtility;
 
-namespace AtApp {
-	/// Used to define, implement, and load a Lua API for the AtApp::State class.
-	/** In addition to API handles for the AtApp::State class, this class implements various globals, such as the entire SDL_Scancode enum, global events, and related functions.
-        The object 'Application' is used to call methods of AtApp::State in Lua scripts, e.g. Application:GetFramerate(); */
+namespace sdlApp {
+	/// Used to define, implement, and load a Lua API for the sdlApp::State class.
+	/** In addition to API handles for the sdlApp::State class, this class implements various globals, such as the entire SDL_Scancode enum, global events, and related functions.
+        The object 'Application' is used to call methods of sdlApp::State in Lua scripts, e.g. Application:GetFramerate(); */
     class API {
         //Members
         protected:
-            static State *Application;                          //!< Pointer to the AtApp::State instance used in the API.
+            static State *Application;                          //!< Pointer to the sdlApp::State instance used in the API.
         //Access Methods
         protected:
        API();

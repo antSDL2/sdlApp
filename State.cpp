@@ -4,10 +4,10 @@
 #include <sstream>
 #include <ctime>
 
-#include <AtUtility/Renderer.h>
-#include <AtUtility/Lua.h>
+#include <sdlUtility/Renderer.h>
+#include <sdlUtility/Lua.h>
 
-using namespace AtUtility;
+using namespace sdlUtility;
 
 static const int SDL_CUSTOM_CTRL       = 1001;
 static const int SDL_CUSTOM_SHIFT      = 1002;
@@ -20,7 +20,7 @@ static const int SDL_CUSTOM_X2MB       = 1008;
 static const int SDL_CUSTOM_WHEELUP    = 1009;
 static const int SDL_CUSTOM_WHEELDOWN  = 1010;
 
-namespace AtApp {
+namespace sdlApp {
     /// Enables or disables resizing of the application window.
     void State::AllowResize(bool State) {
         Resizable = State;

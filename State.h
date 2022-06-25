@@ -2,17 +2,17 @@
 #ifndef NEOAPP_STATE_H
 #define NEOAPP_STATE_H
 
-#include <AtUtility/Vector2.h>
+#include <sdlUtility/Vector2.h>
 #include <Lua/lua.hpp>
 #include <SDL2/SDL.h>
 #include <string>
 #include <vector>
 #include <map>
 
-using namespace AtUtility;
+using namespace sdlUtility;
 
 /// Contains all class and function implementations of the project.
-namespace AtApp {
+namespace sdlApp {
     /// Used to enumerate different Window modes.
     namespace WindowModes {
         static const int Windowed = 0;

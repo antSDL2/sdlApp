@@ -1,7 +1,7 @@
 //API.cpp
 #include "API.h"
 
-namespace AtApp {
+namespace sdlApp {
     State *API::Application = NULL;
 
     /// Basic constructor.
